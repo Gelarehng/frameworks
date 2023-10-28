@@ -101,7 +101,8 @@ RUN python -m pip --version
 #    #torchvision=0.15.2=py38_cu118 \
 # && conda clean -ya
 
-RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+RUN 
+(base) alinal@LAPTOP-QO193AU1:~/projects/acorn$
 
 # Install HDF5 Python bindings.
 RUN pip install h5py==3.10.0 

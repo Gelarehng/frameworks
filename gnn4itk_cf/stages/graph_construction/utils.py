@@ -35,8 +35,8 @@ def get_weight_mask(event, edges, weight_conditions, true_edges=None, truth_map=
 
     for condition_key, condition_val in weight_conditions.items():
         assert (
-            condition_key in event.keys
-        ), f"Condition key {condition_key} not found in event keys {event.keys}"
+            condition_key in event.keys()
+        ), f"Condition key {condition_key} not found in event keys {event.keys()}"
         condition_lambda = get_condition_lambda(condition_key, condition_val)
         value_mask = condition_lambda(event)
         graph_mask &= map_value_to_edges(
