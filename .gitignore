@@ -17,3 +17,7 @@
 *env*
 *dist*
 run/
+*zip
+*.out*
+*checkpoint*
+*results*
