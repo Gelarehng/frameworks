@@ -18,7 +18,8 @@ import os
 from ..graph_construction_stage import GraphConstructionStage
 
 from pytorch_lightning import LightningModule
-from torch_geometric.data import DataLoader, Dataset
+from torch_geometric.data import Dataset
+from torch_geometric.loader import DataLoader
 import torch
 import torch.nn.functional as F
 
@@ -302,11 +303,11 @@ class MetricLearning(GraphConstructionStage, LightningModule):
         self, batch, embedding, weights=None, pred_edges=None, truth=None
     ):
         if pred_edges is None:
-            assert "edge_index" in batch.keys, "Must provide pred_edges if not in batch"
+            assert "edge_index" in batch.keys(), "Must provide pred_edges if not in batch"
             pred_edges = batch.edge_index
 
         if truth is None:
-            assert "y" in batch.keys, "Must provide truth if not in batch"
+            assert "y" in batch.keys(), "Must provide truth if not in batch"
             truth = batch.y
 
         if weights is None:
@@ -590,7 +591,7 @@ class GraphDataset(Dataset):
         """
 
         if not hasattr(event, "num_nodes"):
-            assert "x" in event.keys, "No node features found in event"
+            assert "x" in event.keys(), "No node features found in event"
             event.num_nodes = event.x.shape[0]
 
     def scale_features(self, event):
@@ -607,7 +608,7 @@ class GraphDataset(Dataset):
                 self.hparams["node_scales"], list
             ), "Feature scaling must be a list of ints or floats"
             for i, feature in enumerate(self.hparams["node_features"]):
-                assert feature in event.keys, f"Feature {feature} not found in event"
+                assert feature in event.keys(), f"Feature {feature} not found in event"
                 event[feature] = event[feature] / self.hparams["node_scales"][i]
 
     def unscale_features(self, event):
@@ -624,7 +625,7 @@ class GraphDataset(Dataset):
                 self.hparams["node_scales"], list
             ), "Feature scaling must be a list of ints or floats"
             for i, feature in enumerate(self.hparams["node_features"]):
-                assert feature in event.keys, f"Feature {feature} not found in event"
+                assert feature in event.keys(), f"Feature {feature} not found in event"
                 event[feature] = event[feature] * self.hparams["node_scales"][i]
 
     def handle_edge_list(self, event):
